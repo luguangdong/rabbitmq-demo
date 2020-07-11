@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: spring-boot-amqp
+  rabbitmq:
+    host: 192.168.137.109
+    port: 5672
+    virtual-host: /beyond
+    username: rabbit
+    password: 123456
+    # 开启发送消息确认 对应RabbitTemplate.ConfirmCallback接口
+    publisher-confirm-type: correlated
+    # 开启发送消息失败返回 对应RabbitTemplate.ReturnCallback接口
+    publisher-returns: true
+    # 这个配置是针对消息消费端的配置
+    listener:
+      simple:
+        # 默认情况下消息消费者是自动 ack （确认）消息的，如果要手动 ack（确认）则需要修改确认模式为 manual
+        acknowledge-mode: manual
+        concurrency: 1
+        max-concurrency: 1
+        retry:
+          enabled: true
+
+logging:
+  config: classpath:logback-spring.xml
+
